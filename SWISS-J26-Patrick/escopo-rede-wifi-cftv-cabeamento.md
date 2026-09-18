@@ -35,10 +35,10 @@
 | Suíte Master + Closet | 14,04 + 10,12 m² | Ponto de TV + Wi-Fi próximo (parede em alvenaria mais espessa/fundos) |
 | Suíte 01 | 12,00 m² | Ponto de TV |
 | Suíte 02 | 12,96 m² | Ponto de TV |
-| Escritório | 5,90 m² | Ponto de TV/monitor + dados |
-| Circulação (2 trechos) | 2,65 + 5,15 m² | Rota preferencial de infraestrutura (eletrodutos/forro) e **local do nicho técnico do rack** (ver item 6.1) |
-| Garagem | 27,65 m² | Câmeras de acesso veicular, ponto de AP externo sob beiral, entrada da ONU da operadora |
-| Depósito | 3,54 m² | Cluster de serviço — descartado como local do rack por ficar excêntrico ao eixo de maior demanda (ver item 6.1) |
+| Escritório | 5,90 m² | Ponto de TV/monitor + dados; **local definitivo do rack/quadro de telecom** (decisão do cliente — ver item 6.1) |
+| Circulação (2 trechos) | 2,65 + 5,15 m² | Rota preferencial de infraestrutura (eletrodutos/forro) até o Escritório |
+| Garagem | 27,65 m² | Câmeras de acesso veicular, ponto de AP externo sob beiral, entrada da ONU da operadora (próxima ao Escritório) |
+| Depósito | 3,54 m² | Cluster de serviço — considerado e descartado como local do rack (ver item 6.1) |
 | Lavanderia / Secagem | 6,28 + 7,02 m² | Rota alternativa de cabeamento até fundos |
 | Área Gourmet + Deck | 23,43 + 18,59 m² | Ponto de TV externa + AP externo |
 | Piscina | 13,16 / 14,27 m² | Sem equipamentos elétricos na borda molhada (NBR 5410) |
@@ -142,61 +142,61 @@ Baseado no layout já esboçado nas simulações (8 posições ao longo do perí
 | Suíte Master | 1x | Junto à previsão de painel de TV |
 | Suíte 01 | 1x | — |
 | Suíte 02 | 1x | — |
-| Escritório | 1x | Pode acumular função de ponto de dados (PC/impressora) |
+| Escritório | 1x | Pode acumular função de ponto de dados (PC/impressora); ponto co-localizado com o próprio rack (patch direto, sem cabo longo) |
 | Área Gourmet | 1x | Uso externo coberto (beiral), caixa de sobrepor com tampa |
 | **Total** | **6 pontos** | Expansível (Deck/Piscina como ponto opcional nº 7) |
 
-- Todos os pontos em **topologia home-run** (um cabo dedicado por ponto, sem emendas), origem no rack (ver definição de local otimizado no item 6.1).
-- Distância máxima estimada, já com o rack reposicionado (item 6.1): **≈ 17–19 m** até os pontos mais afastados (Suíte Master, Gourmet, cantos de fundos) — contra ≈26–28 m na posição inicial (Depósito). Segue dentro do limite de 100 m do Cat6 com folga confortável.
-- Caminhamento sugerido: eletrodutos embutidos em laje/contrapiso acompanhando as Circulações (2,65 m² e 5,15 m²), que atravessam o eixo da casa de norte a sul — rota natural para o backbone e também o corredor onde fica o novo nicho técnico.
+- Todos os pontos em **topologia home-run** (um cabo dedicado por ponto, sem emendas), origem no rack, instalado no **Escritório** por definição do cliente (ver item 6.1).
+- Distância máxima estimada a partir do Escritório: **≈ 26–29 m** até os pontos mais afastados (Suíte Master, Gourmet, cantos de fundos/piscina). Ainda dentro do limite de 100 m do Cat6, mas é a maior metragem entre as opções avaliadas (ver comparativo no item 6.1).
+- Caminhamento sugerido: eletrodutos embutidos em laje/contrapiso acompanhando as Circulações (2,65 m² e 5,15 m²), que atravessam o eixo da casa de norte a sul, partindo do Escritório até o fundo do lote.
 - Cada ponto de TV também deve prever **1 tomada elétrica dedicada** ao lado (já usual em projeto elétrico), mas isso está fora do escopo deste documento de redes.
 
 ---
 
 ## 6. Infraestrutura Passiva / Rack
 
-### 6.1 Definição do local do rack — otimização de metragem de cabo
+### 6.1 Definição do local do rack
 
-A posição de um rack residencial não deve ser escolhida pela conveniência do cômodo (ex.: "cabe no depósito"), e sim pelo **ponto que minimiza a soma das distâncias a todos os pontos ativos** (APs, câmeras, TVs) — em termos de rede, o rack deve ficar o mais próximo possível da **mediana da demanda de cabeamento**, não de uma das extremidades do imóvel.
+> **Decisão do cliente:** o rack será instalado no **Escritório (5,90 m²)**. Esta seção registra a análise técnica de metragem de cabo considerando esse local definido e o comparativo com as alternativas avaliadas, para que a equipe de instalação e o próprio cliente tenham visibilidade do trade-off assumido.
 
 A casa tem 30 m de profundidade e formato retangular estreito, com os pontos de rede distribuídos ao longo de todo esse eixo:
 
 - Extremo sul (~0–5 m): Garagem, acesso de veículos/pedestres, 2 câmeras de canto (CAM-07/08), entrada da concessionária (ONU).
-- Trecho sul-central (~5–9 m): Depósito, Lavanderia, Secagem, Escritório — cluster de serviço, 2 câmeras (CAM-05/06), 1 ponto de TV (Escritório).
+- Trecho sul-central (~5–9 m): **Escritório**, Depósito, Lavanderia, Secagem — cluster de serviço, 2 câmeras (CAM-05/06).
 - Trecho central (~9–18 m): Living, Cozinha/Jantar, Circulação, Suíte 01, Suíte 02 — **maior concentração de pontos**: AP-01, AP-02, 2 câmeras (CAM-03/04), 3 pontos de TV (Living, Suíte 01, Suíte 02).
 - Trecho norte (~18–26 m): Suíte Master, Closet, BWC — AP-02 (extensão), 1 ponto de TV.
 - Extremo norte (~26–30 m): Piscina, Deck, Gourmet — AP-03, 2 câmeras de canto (CAM-01/02), 1 ponto de TV.
 
-**Local inicialmente cogitado (Depósito, ~8 m do extremo sul):** fica próximo apenas do cluster de serviço e da garagem. Para todos os pontos do bloco de suítes e da área de piscina/gourmet — que são justamente os mais numerosos e mais distantes — o cabo precisa atravessar quase toda a casa (~19 a 28 m). Resultado: maior metragem total de Cat6 (estimativa ≈ 160 m só de componente longitudinal, sem contar reservas de subida/descida).
-
-**Local recomendado:** um **nicho técnico embutido na parede do corredor central de circulação**, no trecho que liga a Suíte 01/02 ao acesso da Suíte Master (~15–17 m do extremo sul, aproximadamente o ponto médio real da casa considerando a distribuição dos pontos, não apenas a metragem do terreno). Esse ponto:
-
-- É a **mediana estatística** das distâncias de todos os 17 pontos ativos (TVs + APs + câmeras) — matematicamente, o ponto que minimiza a soma total dos comprimentos de cabo é a mediana, não o centro geométrico nem uma das pontas.
-- Reduz a distância máxima a qualquer ponto de ~26–28 m para **~17–19 m**.
-- Reduz a metragem total estimada de Cat6 de ~160 m para **~140 m** (≈ 14% de economia), considerando apenas os 17 pontos internos/perimetrais (sem uplink).
-- Fica a meio caminho entre o bloco social (Living/Cozinha) e o bloco íntimo (suítes), que concentram o maior número de dispositivos simultâneos (TVs 4K, streaming, consoles) — menor latência de comutação para o tráfego mais pesado.
-
-**Trade-off a considerar:** a entrada da concessionária (ONU/fibra) normalmente chega pela fachada sul, perto da garagem. Deslocar o rack para o centro da casa exige **1 cabo de uplink dedicado mais longo** (ONU → rack central, ~15–17 m) em vez de a ONU ficar ao lado do rack. Esse é um custo de apenas 1 cabo a mais, compensado pela redução em **17 outros cabos** que passam a ser mais curtos — a troca é favorável.
-
-**Alternativa caso o cliente exija um cômodo fechado (em vez de nicho embutido):** usar o **Closet Master** (10,12 m², ~20–22 m do extremo sul) como segunda opção — ainda bem mais central que o Depósito (distância máxima ~19 m), com a vantagem de já ser um espaço fechado e privativo, sem necessidade de obra para embutir nicho. Fica ligeiramente pior que o nicho central, mas é a melhor opção "pronta" sem alterar a alvenaria.
+**Local definido — Escritório (~8 m do extremo sul):** por estar no mesmo cluster sul-central do Depósito, o Escritório herda o mesmo perfil de distância que aquela opção: é o ponto **mais curto para a Garagem/ONU** (uplink de concessionária mais barato, ~6–8 m) e para as câmeras CAM-05/06/07/08, porém é o **mais distante** dos pontos com maior concentração de demanda — bloco de suítes, corredor central e, principalmente, Piscina/Gourmet nos fundos (~26–30 m em linha de rota).
 
 | Local candidato | Posição (eixo sul→norte) | Distância máx. a um ponto | Metragem total estimada (Cat6, 17 pontos) | Observação |
 |---|---|---|---|---|
-| Depósito *(descartado)* | ~8 m | ~26–28 m | ~160 m | Só é bom para garagem/serviço; penaliza suítes e piscina/gourmet |
-| **Nicho técnico central (recomendado)** | ~15–17 m | ~17–19 m | **~140 m** | Menor metragem total; requer nicho embutido na circulação |
-| Closet Master *(alternativa sem obra)* | ~20–22 m | ~19–21 m | ~148 m | Espaço já fechado, mas ligeiramente mais longe do cluster sul |
+| **Escritório (definido pelo cliente)** | ~8 m | **~26–29 m** (Suíte Master / cantos de fundos) | **~165 m** | Uplink da ONU mais curto (~6–8 m); é o cômodo mais distante do bloco de suítes e da piscina/gourmet |
+| Depósito *(avaliado e descartado)* | ~8 m | ~26–28 m | ~160 m | Perfil de distância equivalente ao Escritório (mesmo cluster); sem vantagem sobre o Escritório, que já é um ambiente de uso do cliente |
+| Nicho técnico central (circulação) | ~15–17 m | ~17–19 m | ~140 m | Menor metragem total possível, mas exige obra (nicho embutido) e uplink de ONU mais longo (~15–17 m) |
+| Closet Master | ~20–22 m | ~19–21 m | ~148 m | Espaço fechado, mas distante do cluster sul (garagem/ONU) |
 
-**Local proposto (definitivo):** nicho técnico embutido de 9U–12U na parede da Circulação central, entre a Suíte 01/02 e o acesso à Suíte Master, com porta ventilada embutida (acabamento no nível da parede).
+Ou seja: em relação à opção de menor metragem total (nicho técnico central), instalar no Escritório representa **~25 m a mais de cabo Cat6** no total (~165 m vs. ~140 m) e cerca de **10 m a mais na distância máxima** (Suíte Master/fundos). Ainda assim, todas as distâncias permanecem **muito abaixo do limite de 100 m** por segmento Cat6, então não há qualquer restrição técnica — é uma diferença de custo de material (mais alguns metros de cabo), não de viabilidade.
+
+**Mitigações recomendadas para reduzir o impacto da maior distância aos fundos (mantendo o rack no Escritório):**
+
+1. Priorizar o trajeto pelas Circulações (2,65 m² e 5,15 m²), que formam a rota mais reta possível entre o Escritório e o bloco de suítes/piscina — evita desvios desnecessários.
+2. Para os pontos mais distantes (AP-03 no Gourmet, TV Gourmet, CAM-01/02 nos cantos de fundos), usar cabo Cat6 de melhor blindagem (F/UTP) se houver trechos paralelos a fiação elétrica de potência, já que o percurso é mais longo e mais exposto a ruído.
+3. Caso o cliente aceite futuramente, um pequeno switch PoE não gerenciado de 5–8 portas embutido na circulação central pode atender AP-02 + suítes + CAM-03/04 com runs curtos, com apenas 1 uplink até o rack no Escritório — reduz a quantidade de cabo longo sem abandonar o rack definido. *(Opcional — fora do escopo padrão home-run, avaliar com o cliente se compensa a complexidade extra.)*
+
+### 6.2 Especificação do rack
 
 | Item | Especificação | Qtde |
 |---|---|---|
-| Rack/nicho embutido | 9U–12U, com organizadores, porta ventilada | 1 |
+| Rack de parede / gabinete fechado | 9U–12U, com organizadores, ventilação forçada (o Escritório é ambiente de permanência — priorizar modelo silencioso) | 1 |
 | Patch panel Cat6 24 portas | Terminação de todos os pontos (TVs, APs, câmeras) | 1 |
 | Switch PoE+ Gerenciável | 24 portas (mín. 4 SFP/PoE budget compatível com 4 APs + 8 câmeras) | 1 |
-| Cabo de uplink dedicado (ONU/garagem → nicho central) | Cat6 ou fibra, ~15–17 m | 1 |
-| Switch/roteador de borda | Conforme operadora (ONU/roteador), permanece junto à entrada na garagem, interligado por uplink | 1 (existente/fornecido pela operadora) |
-| Nobreak | 1 kVA, para nicho + patch/switch | 1 |
-| NVR 8 canais PoE + HD 6TB | Conforme item 4.3 — pode ficar no nicho central ou próximo à garagem (câmeras Sul), avaliar em campo | 1 |
+| Cabo de uplink (ONU/garagem → rack no Escritório) | Cat6, ~6–8 m | 1 |
+| Switch/roteador de borda | Conforme operadora (ONU/roteador) — pode migrar da garagem para dentro do próprio rack do Escritório, dado o percurso curto | 1 (existente/fornecido pela operadora) |
+| Nobreak | 1 kVA, para rack + roteador de borda | 1 |
+| NVR 8 canais PoE + HD 6TB | Conforme item 4.3 — instalar no rack do Escritório | 1 |
+
+> Recomenda-se prever circuito elétrico dedicado (tomada exclusiva) no Escritório para o rack/nobreak, além de ventilação mínima no gabinete (o cômodo é fechado e de uso frequente).
 
 ### Capacidade de portas do switch (dimensionamento)
 
@@ -225,8 +225,8 @@ A casa tem 30 m de profundidade e formato retangular estreito, com os pontos de 
 
 ```mermaid
 flowchart TB
-    INT[Internet / Operadora] --> ONU[ONU / Roteador de Borda - Garagem]
-    ONU -- uplink dedicado ~15-17m --> SW[Switch PoE+ 24p - Nicho Técnico Central]
+    INT[Internet / Operadora] --> ONU[ONU - Garagem]
+    ONU -- uplink ~6-8m --> SW[Switch PoE+ 24p - Rack no Escritório]
     SW --> AP1[AP-01 Living/Circulação]
     SW --> AP2[AP-02 Corredor Suítes]
     SW --> AP3[AP-03 Gourmet/Deck - Externo]
@@ -254,14 +254,14 @@ flowchart TB
 | NVR 8 canais PoE | 1 |
 | HD para NVR (6TB ou 2x4TB) | 1–2 |
 | Switch PoE+ gerenciável 24p | 1 |
-| Nicho/rack embutido 9U–12U (parede da circulação) | 1 |
+| Rack de parede/gabinete 9U–12U (Escritório) | 1 |
 | Patch panel Cat6 24p | 1 |
 | Nobreak 1kVA | 1 |
-| Cabo Cat6 U/UTP — pontos internos/perimetrais (~140 m, item 6.1) + uplink ONU→nicho (~15–17 m) + reserva de subida/curvas | ~280–310 m |
+| Cabo Cat6 U/UTP — pontos internos/perimetrais a partir do Escritório (~165 m, item 6.1) + uplink ONU→rack (~6–8 m) + reserva de subida/curvas | ~300–330 m |
 | Conector RJ45 Cat6 (keystone) | ~40 |
 | Caixas de sobrepor externas (câmeras/AP externo) | 5 |
 
-> Quantidades de cabo e conectores são estimativas de escopo; o quantitativo final depende do trajeto exato definido em obra (posição de laje/forro, prumadas). A metragem já reflete o reposicionamento do rack para o nicho técnico central (item 6.1), que reduz o consumo de cabo em relação à alternativa de instalá-lo no Depósito (~350–400 m).
+> Quantidades de cabo e conectores são estimativas de escopo; o quantitativo final depende do trajeto exato definido em obra (posição de laje/forro, prumadas). A metragem reflete o rack instalado no Escritório (item 6.1) — cerca de 25 m a mais de Cat6 do que a alternativa de menor metragem (nicho técnico central), em troca de manter o equipamento em um cômodo já existente e sem necessidade de obra na alvenaria.
 
 ---
 
@@ -269,5 +269,5 @@ flowchart TB
 
 1. Validação em campo (site survey físico) das posições de AP e câmera antes da passagem de eletrodutos, confirmando alturas de pé-direito e posição real do beiral.
 2. Confirmação se haverá pavimento superior — se sim, complementar este escopo com pontos adicionais e verticalização do rack (shaft técnico).
-3. Confirmação em campo do ponto exato de entrada da operadora (ONU) na garagem e viabilidade de abertura do nicho técnico embutido na parede da circulação central (item 6.1), incluindo o traçado do uplink dedicado ONU → nicho.
+3. Confirmação em campo do ponto exato de entrada da operadora (ONU) na garagem e do trajeto do uplink ONU → rack no Escritório (item 6.1), além de verificar espaço/ventilação disponível no Escritório para o gabinete.
 4. Aprovação do proprietário quanto a modelos/marcas (ex.: linha Ubiquiti UniFi, ou similar de mesma capacidade PoE/Wi-Fi 6) e política de retenção de gravação do CFTV.
