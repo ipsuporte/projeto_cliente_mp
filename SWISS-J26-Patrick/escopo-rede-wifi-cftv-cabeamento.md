@@ -8,6 +8,8 @@
 - `projeto-arquitetonico/PROJETO_SWISS_J26_PATRICK_PAV_TERREO.pdf` (planta baixa técnica, planta de situação, quadro de esquadrias e quadro de áreas)
 - `simulacoes/simulacao_wifi_heatmap_rssi.png` e `simulacao_wifi_heatmap_cobertura.png` (simulações preliminares de cobertura de sinal/RF sobre a planta)
 
+**Diagrama de referência:** `diagramas/planta_distribuicao_rede.png` — a distribuição final (6 câmeras, 4 APs, 6 pontos de TV e o rack) desenhada diretamente sobre a planta baixa técnica limpa (sem a sobreposição do heatmap), com legenda. Posições aproximadas por ambiente/parede — a posição exata de fixação deve ser confirmada no site survey (item 10).
+
 **Elaborado por:** Engenharia de Redes (perfil CCNP/CWNA) — revisão de escopo
 **Data:** 18/09/2026
 
