@@ -94,42 +94,45 @@ A simulação de RSSI (`simulacao_wifi_heatmap_rssi.png`) e a de cobertura (`sim
 
 ### 4.1 Perímetro e pontos de câmera
 
-Baseado no layout já esboçado nas simulações (8 posições ao longo do perímetro), o escopo consolida-se em **8 câmeras externas fixas**, priorizando cobertura de muros, acessos e área de lazer, com sobreposição de campo de visão nos cantos:
+> **Correção de contagem (confirmada pelo cliente):** as simulações mostram **6 câmeras Ubiquiti UniFi G5**, não 8. A versão anterior deste documento presumiu 2 câmeras adicionais nos cantos sul (portão/calçada) que não existem no layout real. A tabela abaixo reflete as 6 posições efetivamente marcadas nas imagens.
+
+O layout já esboçado nas simulações consolida-se em **6 câmeras externas fixas, todas Ubiquiti UniFi G5 Dome** (mesmo modelo em todas as posições, mantendo padronização visual e de sobressalentes):
 
 | Câmera | Posição | Fachada | Cobertura |
 |---|---|---|---|
-| CAM-01 | Canto Noroeste | Norte/Oeste | Piscina, fundo do lote, muro oeste (trecho fundos) |
-| CAM-02 | Canto Nordeste | Norte/Leste | Piscina/Gourmet, muro leste (trecho fundos) |
-| CAM-03 | Muro Oeste, altura da Suíte Master/Circulação | Oeste | Corredor lateral oeste (trecho central) |
-| CAM-04 | Muro Leste, altura das Suítes 01/02 | Leste | Corredor lateral leste (trecho central) |
-| CAM-05 | Muro Oeste, altura da Lavanderia/Depósito | Oeste | Corredor lateral oeste (trecho sul), acesso de serviço |
-| CAM-06 | Muro Leste, altura do Escritório | Leste | Corredor lateral leste (trecho sul) |
-| CAM-07 | Canto Sudoeste | Sul/Oeste | Acesso de veículos, garagem, portão |
-| CAM-08 | Canto Sudeste | Sul/Leste | Acesso de pedestres, calçada, Rua Fribourg |
+| CAM-01 | Canto Noroeste (fundos) | Norte/Oeste | Piscina, fundo do lote, muro oeste (trecho fundos) |
+| CAM-02 | Muro Leste, altura da Suíte Master/BWC | Leste | Muro leste (trecho fundos), parte da Área Gourmet |
+| CAM-03 | Muro Oeste, altura da Suíte Master/Circulação | Oeste | Corredor lateral oeste (trecho norte) |
+| CAM-04 | Muro Leste / pátio, altura da Suíte 02 | Leste | Corredor lateral leste (trecho central) |
+| CAM-05 | Muro Leste, altura do Escritório/Depósito | Leste | Corredor lateral leste (trecho sul), acesso de serviço |
+| CAM-06 | Canto Sudoeste, próximo à Garagem | Sul/Oeste | Acesso de veículos, garagem, portão |
+
+> **Observação de cobertura:** com apenas 6 câmeras, o **acesso de pedestres/calçada no canto sudeste** (junto à Rua Fribourg) fica sem câmera dedicada — hoje é coberto apenas indiretamente pela CAM-06. Se o acesso de pedestres for prioritário para o cliente, vale avaliar deslocar a CAM-05 ou adicionar uma 7ª câmera nesse canto; mantido como está por ora, por refletir fielmente o que já foi definido.
 
 ### 4.2 Especificação técnica das câmeras
 
 | Parâmetro | Especificação |
 |---|---|
-| Resolução | Mínimo 4 MP (bullet varifocal para muros/perímetro; turret/dome para cantos com campo mais amplo) |
-| Lente | Varifocal 2,8–12 mm nas de perímetro (CAM-03/04/05/06); fixa 2,8 mm de maior ângulo nos cantos (CAM-01/02/07/08) |
-| IR / baixa luminosidade | IR real de 30–40 m (compatível com a profundidade de 30 m do lote) + modo color low-light |
-| Alimentação | PoE (802.3af/at), sem fonte local |
-| Proteção | IP66/IK10, instalação sob projeção do beiral (evita incidência direta de chuva) |
-| Compressão | H.265/H.265+ |
+| Modelo | Ubiquiti UniFi Protect **G5 Dome** (mesmo modelo nas 6 posições) |
+| Resolução | 5 MP |
+| Lente | Fixa, grande angular — adequada tanto para muro (CAM-02/03/04/05) quanto para canto (CAM-01/06) |
+| IR / baixa luminosidade | IR integrado ≈ 30 m (compatível com a maior parte dos vãos do lote) |
+| Alimentação | PoE (802.3af), sem fonte local |
+| Proteção | IP67, instalação sob projeção do beiral quando possível |
+| Compressão | H.265, gerenciada pelo UniFi Protect |
 
-### 4.3 Gravação (NVR) e armazenamento
+### 4.3 Gravação (UniFi Protect) e armazenamento
 
-- **NVR 8 canais PoE** (portas suficientes para as 8 câmeras, com 1–2 portas de expansão para câmeras internas futuras, ex.: área de serviço/garagem interna).
-- Cálculo de armazenamento (referência, 4 MP / H.265+):
-  - Gravação contínua 24/7: ≈ 35–45 GB/câmera/dia → **8 câmeras ≈ 300–360 GB/dia**.
-  - Gravação por detecção de movimento/pessoas (recomendado): reduz para **~30–40% do valor contínuo**, ou seja, ≈ 100–140 GB/dia para as 8 câmeras.
+- As câmeras são da linha **UniFi Protect**, portanto **não funcionam com um NVR ONVIF genérico** — é necessário um **UniFi OS Console** rodando o aplicativo Protect. Recomendação: **UniFi UNVR** (4 baias de HD, dedicado a Protect) ou, caso o roteador de borda também venha a ser UniFi, um **UniFi Dream Machine Pro/SE** (que já integra roteador + Protect em um único equipamento).
+- Cálculo de armazenamento (referência de planejamento, 5 MP / H.265 — **validar o número final com a calculadora oficial de armazenamento do UniFi Protect antes de fechar a compra do HD**):
+  - Gravação contínua 24/7: ≈ 45–55 GB/câmera/dia → **6 câmeras ≈ 270–330 GB/dia**.
+  - Gravação por detecção de movimento/pessoas (recomendado, padrão do Protect): reduz para **~30–40% do valor contínuo**, ou seja, ≈ 80–130 GB/dia para as 6 câmeras.
 - **Recomendação:** 1x HD 6 TB (ou 2x 4 TB em RAID 1 para redundância) → retenção efetiva de **30–45 dias** com gravação por evento/movimento, ajustável.
-- Acesso remoto via app do fabricante do NVR, com VPN ou P2P seguro (evitar exposição direta de portas na internet).
+- Acesso remoto via app UniFi Protect, com acesso remoto nativo (Ubiquiti Cloud) ou VPN — evitar exposição direta de portas na internet.
 
 ### 4.4 Observações de conformidade
 
-- Nenhuma câmera deve ter campo de visão voltado para o interior de residências vizinhas — ajustar ângulo/máscaras de privacidade nas CAM-01/02/07/08 (cantos).
+- Nenhuma câmera deve ter campo de visão voltado para o interior de residências vizinhas — ajustar ângulo/máscaras de privacidade nas CAM-01 e CAM-06 (cantos).
 - Câmeras não devem monitorar a lâmina d'água da piscina de forma a caracterizar área de intimidade caso existam vestiários/trocadores próximos — restringir campo de visão à borda/acesso, não à área de estar íntima.
 
 ---
@@ -161,22 +164,22 @@ Baseado no layout já esboçado nas simulações (8 posições ao longo do perí
 
 A casa tem 30 m de profundidade e formato retangular estreito, com os pontos de rede distribuídos ao longo de todo esse eixo:
 
-- Extremo sul (~0–5 m): Garagem, acesso de veículos/pedestres, 2 câmeras de canto (CAM-07/08), entrada da concessionária (ONU).
-- Trecho sul-central (~5–9 m): **Escritório**, Depósito, Lavanderia, Secagem — cluster de serviço, 2 câmeras (CAM-05/06).
-- Trecho central (~9–18 m): Living, Cozinha/Jantar, Circulação, Suíte 01, Suíte 02 — **maior concentração de pontos**: AP-01, AP-02, 2 câmeras (CAM-03/04), 3 pontos de TV (Living, Suíte 01, Suíte 02).
-- Trecho norte (~18–26 m): Suíte Master, Closet, BWC — AP-02 (extensão), 1 ponto de TV.
-- Extremo norte (~26–30 m): Piscina, Deck, Gourmet — AP-03, 2 câmeras de canto (CAM-01/02), 1 ponto de TV.
+- Extremo sul (~0–5 m): Garagem, acesso de veículos/pedestres, 1 câmera de canto (CAM-06), entrada da concessionária (ONU).
+- Trecho sul-central (~5–9 m): **Escritório**, Depósito, Lavanderia, Secagem — cluster de serviço, 1 câmera (CAM-05).
+- Trecho central (~9–18 m): Living, Cozinha/Jantar, Circulação, Suíte 01, Suíte 02 — **maior concentração de pontos**: AP-01, AP-02, 1 câmera (CAM-04), 3 pontos de TV (Living, Suíte 01, Suíte 02).
+- Trecho norte (~18–26 m): Suíte Master, Closet, BWC — AP-02 (extensão), 2 câmeras (CAM-02/03, muros leste e oeste), 1 ponto de TV.
+- Extremo norte (~26–30 m): Piscina, Deck, Gourmet — AP-03, 1 câmera de canto (CAM-01), 1 ponto de TV.
 
-**Local definido — Escritório (~8 m do extremo sul):** por estar no mesmo cluster sul-central do Depósito, o Escritório herda o mesmo perfil de distância que aquela opção: é o ponto **mais curto para a Garagem/ONU** (uplink de concessionária mais barato, ~6–8 m) e para as câmeras CAM-05/06/07/08, porém é o **mais distante** dos pontos com maior concentração de demanda — bloco de suítes, corredor central e, principalmente, Piscina/Gourmet nos fundos (~26–30 m em linha de rota).
+**Local definido — Escritório (~8 m do extremo sul):** por estar no mesmo cluster sul-central do Depósito, o Escritório herda o mesmo perfil de distância que aquela opção: é o ponto **mais curto para a Garagem/ONU** (uplink de concessionária mais barato, ~6–8 m) e para as câmeras CAM-05/06, porém é o **mais distante** dos pontos com maior concentração de demanda — bloco de suítes, corredor central e, principalmente, Piscina/Gourmet nos fundos (~26–30 m em linha de rota).
 
-| Local candidato | Posição (eixo sul→norte) | Distância máx. a um ponto | Metragem total estimada (Cat6, 17 pontos) | Observação |
+| Local candidato | Posição (eixo sul→norte) | Distância máx. a um ponto | Metragem total estimada (Cat6, 16 pontos) | Observação |
 |---|---|---|---|---|
-| **Escritório (definido pelo cliente)** | ~8 m | **~26–29 m** (Suíte Master / cantos de fundos) | **~165 m** | Uplink da ONU mais curto (~6–8 m); é o cômodo mais distante do bloco de suítes e da piscina/gourmet |
-| Depósito *(avaliado e descartado)* | ~8 m | ~26–28 m | ~160 m | Perfil de distância equivalente ao Escritório (mesmo cluster); sem vantagem sobre o Escritório, que já é um ambiente de uso do cliente |
-| Nicho técnico central (circulação) | ~15–17 m | ~17–19 m | ~140 m | Menor metragem total possível, mas exige obra (nicho embutido) e uplink de ONU mais longo (~15–17 m) |
-| Closet Master | ~20–22 m | ~19–21 m | ~148 m | Espaço fechado, mas distante do cluster sul (garagem/ONU) |
+| **Escritório (definido pelo cliente)** | ~8 m | **~26–29 m** (Suíte Master / canto de fundos) | **~175 m** | Uplink da ONU mais curto (~6–8 m); é o cômodo mais distante do bloco de suítes e da piscina/gourmet |
+| Depósito *(avaliado e descartado)* | ~8 m | ~26–28 m | ~170 m | Perfil de distância equivalente ao Escritório (mesmo cluster); sem vantagem sobre o Escritório, que já é um ambiente de uso do cliente |
+| Nicho técnico central (circulação) | ~15–17 m | ~13–14 m | ~120 m | Menor metragem total possível, mas exige obra (nicho embutido) e uplink de ONU mais longo (~15–17 m) |
+| Closet Master | ~20–22 m | ~19–21 m | ~140 m | Espaço fechado, mas distante do cluster sul (garagem/ONU) |
 
-Ou seja: em relação à opção de menor metragem total (nicho técnico central), instalar no Escritório representa **~25 m a mais de cabo Cat6** no total (~165 m vs. ~140 m) e cerca de **10 m a mais na distância máxima** (Suíte Master/fundos). Ainda assim, todas as distâncias permanecem **muito abaixo do limite de 100 m** por segmento Cat6, então não há qualquer restrição técnica — é uma diferença de custo de material (mais alguns metros de cabo), não de viabilidade.
+Ou seja: em relação à opção de menor metragem total (nicho técnico central), instalar no Escritório representa **~55 m a mais de cabo Cat6** no total (~175 m vs. ~120 m) e cerca de **13-15 m a mais na distância máxima** (Suíte Master/fundos). Ainda assim, todas as distâncias permanecem **muito abaixo do limite de 100 m** por segmento Cat6, então não há qualquer restrição técnica — é uma diferença de custo de material (mais alguns metros de cabo, ainda dentro de 1 única caixa de 305m — ver item 9), não de viabilidade.
 
 **Mitigações recomendadas para reduzir o impacto da maior distância aos fundos (mantendo o rack no Escritório):**
 
@@ -194,18 +197,18 @@ Ou seja: em relação à opção de menor metragem total (nicho técnico central
 | Cabo de uplink (ONU/garagem → rack no Escritório) | Cat6, ~6–8 m | 1 |
 | Switch/roteador de borda | Conforme operadora (ONU/roteador) — pode migrar da garagem para dentro do próprio rack do Escritório, dado o percurso curto | 1 (existente/fornecido pela operadora) |
 | Nobreak | 1 kVA, para rack + roteador de borda | 1 |
-| NVR 8 canais PoE + HD 6TB | Conforme item 4.3 — instalar no rack do Escritório | 1 |
+| UniFi Protect Console (UNVR ou Dream Machine Pro/SE) + HD 6TB | Conforme item 4.3 — instalar no rack do Escritório | 1 |
 
 > Recomenda-se prever circuito elétrico dedicado (tomada exclusiva) no Escritório para o rack/nobreak, além de ventilação mínima no gabinete (o cômodo é fechado e de uso frequente).
 
 ### Capacidade de portas do switch (dimensionamento)
 
 - 4x AP Wi-Fi
-- 8x Câmeras CFTV
+- 6x Câmeras CFTV
 - 6x Pontos de TV
 - 1x Uplink para roteador/ONU
-- 1x NVR
-- **Total ≈ 20 portas utilizadas** → switch de 24 portas atende com folga para expansão (câmera interna adicional, AP-04, ponto de Deck/Piscina).
+- 1x UniFi Protect Console
+- **Total ≈ 18 portas utilizadas** → switch de 24 portas atende com folga para expansão (câmera adicional no canto sudeste, AP-04, ponto de Deck/Piscina).
 
 ---
 
@@ -231,8 +234,8 @@ flowchart TB
     SW --> AP2[AP-02 Corredor Suítes]
     SW --> AP3[AP-03 Gourmet/Deck - Externo]
     SW -.opcional.-> AP4[AP-04 Garagem - Externo]
-    SW --> CAM[8x Câmeras CFTV - VLAN 30]
-    CAM --> NVR[NVR 8ch + HD 6TB]
+    SW --> CAM[6x Câmeras CFTV UniFi G5 - VLAN 30]
+    CAM --> NVR[UniFi Protect Console + HD 6TB]
     SW --> TV1[Ponto TV Living]
     SW --> TV2[Ponto TV Suíte Master]
     SW --> TV3[Ponto TV Suíte 01]
@@ -249,19 +252,18 @@ flowchart TB
 |---|---|
 | Access Point Wi-Fi 6 indoor (teto) | 2 |
 | Access Point Wi-Fi 6 externo (IP65) | 1 (+1 opcional) |
-| Câmera IP bullet varifocal 4MP PoE | 4 |
-| Câmera IP turret/dome 4MP PoE | 4 |
-| NVR 8 canais PoE | 1 |
-| HD para NVR (6TB ou 2x4TB) | 1–2 |
+| Câmera Ubiquiti UniFi Protect G5 Dome | 6 |
+| UniFi Protect Console (UNVR ou Dream Machine Pro/SE) | 1 |
+| HD para o Protect Console (6TB ou 2x4TB) | 1–2 |
 | Switch PoE+ gerenciável 24p | 1 |
 | Rack de parede/gabinete 9U–12U (Escritório) | 1 |
 | Patch panel Cat6 24p | 1 |
 | Nobreak 1kVA | 1 |
-| Cabo Cat6 U/UTP — pontos internos/perimetrais a partir do Escritório (~165 m, item 6.1) + uplink ONU→rack (~6–8 m) + reserva de subida/curvas | ~300–330 m |
-| Conector RJ45 Cat6 (keystone) | ~40 |
-| Caixas de sobrepor externas (câmeras/AP externo) | 5 |
+| Cabo Cat6 U/UTP — 16 pontos (4 Wi-Fi + 6 CFTV + 6 TV) a partir do Escritório + uplink ONU→rack + margem de instalação | 1 caixa de 305m (ver detalhamento na planilha de materiais) |
+| Conector RJ45 Cat6 (keystone) | ~20 |
+| Caixas de sobrepor externas (câmeras/AP externo) | 4 |
 
-> Quantidades de cabo e conectores são estimativas de escopo; o quantitativo final depende do trajeto exato definido em obra (posição de laje/forro, prumadas). A metragem reflete o rack instalado no Escritório (item 6.1) — cerca de 25 m a mais de Cat6 do que a alternativa de menor metragem (nicho técnico central), em troca de manter o equipamento em um cômodo já existente e sem necessidade de obra na alvenaria.
+> Quantidades de cabo e conectores são as usadas na planilha de materiais (`Lista_de_Materiais_Swiss_J26.xlsx`), que já soma automaticamente a metragem por sistema (Wi-Fi/CFTV/TV) na aba Memória de Cálculo. O rack no Escritório consome cerca de 55 m a mais de Cat6 do que a alternativa de menor metragem (nicho técnico central), em troca de manter o equipamento em um cômodo já existente e sem necessidade de obra na alvenaria — mesmo assim, 1 única caixa de 305m atende com folga.
 
 ---
 
