@@ -71,11 +71,12 @@ A simulação de RSSI (`simulacao_wifi_heatmap_rssi.png`) e a de cobertura (`sim
 
 | AP | Local de instalação | Tipo | Cobre principalmente |
 |---|---|---|---|
-| AP-01 | Forro do Living/Circulação central | Teto, Wi-Fi 6 indoor (ex.: UniFi U6-Pro / U6-Lite) | Living, Cozinha/Jantar, Circulação, Escritório |
+| AP-01 | Forro na transição Living/Escritório | Teto, Wi-Fi 6 indoor (ex.: UniFi U6-Pro / U6-Lite) | Living, Cozinha/Jantar, Escritório, Circulação |
 | AP-02 | Forro do corredor das suítes (entre Suíte 01/02 e Suíte Master) | Teto, Wi-Fi 6 indoor | Suíte Master, Closet, Suíte 01, Suíte 02 e respectivos BWCs |
-| AP-03 | Sob o beiral da Área Gourmet (fundos, fachada norte) | Externo, IP65, Wi-Fi 6 (ex.: UniFi U6-Mesh / U6-IW) | Gourmet, Deck, Piscina, quintal |
+| AP-03 | Forro da passagem entre o Gourmet/Deck e o corredor de serviço (Secagem/Lavanderia) | Teto ou parede, Wi-Fi 6 (ex.: UniFi U6-Mesh / U6-IW), IP65 se instalado em área não coberta | Gourmet, Deck, Piscina — ponto central de passagem entre a área social externa e o restante da casa |
 | AP-04 *(opcional)* | Sob o beiral próximo à Garagem (fachada sul) | Externo, IP65 | Garagem, acesso de veículos/pedestres, reforço de sinal na rua/portão |
 
+- As posições de AP-01/02/03 foram conferidas contra a simulação de RF fornecida (item 3.1) — nas imagens aparecem 3 marcadores de AP, exatamente nesses 3 pontos; **não há um 4º marcador no arquivo do cliente**, o que é coerente com o AP-04 ser opcional e ainda não definido.
 - **AP-04** é opcional para o primeiro momento; recomendado caso o proprietário utilize a garagem/entrada como área de convivência ou precise de sinal no portão para interfone/automação.
 - Todos os APs em **cabeamento dedicado** (não em cascata via outro AP) para evitar gargalo.
 
@@ -98,18 +99,20 @@ A simulação de RSSI (`simulacao_wifi_heatmap_rssi.png`) e a de cobertura (`sim
 
 > **Correção de contagem (confirmada pelo cliente):** as simulações mostram **6 câmeras Ubiquiti UniFi G5**, não 8. A versão anterior deste documento presumiu 2 câmeras adicionais nos cantos sul (portão/calçada) que não existem no layout real. A tabela abaixo reflete as 6 posições efetivamente marcadas nas imagens.
 
-O layout já esboçado nas simulações consolida-se em **6 câmeras externas fixas, todas Ubiquiti UniFi G5 Dome** (mesmo modelo em todas as posições, mantendo padronização visual e de sobressalentes):
+O layout já esboçado nas simulações consolida-se em **6 câmeras externas fixas, todas Ubiquiti UniFi G5 Dome** (mesmo modelo em todas as posições, mantendo padronização visual e de sobressalentes). As posições abaixo foram conferidas pixel a pixel contra as simulações fornecidas e transportadas para a planta baixa técnica real — ver `diagramas/planta_distribuicao_rede.png`:
 
-| Câmera | Posição | Fachada | Cobertura |
-|---|---|---|---|
-| CAM-01 | Canto Noroeste (fundos) | Norte/Oeste | Piscina, fundo do lote, muro oeste (trecho fundos) |
-| CAM-02 | Muro Leste, altura da Suíte Master/BWC | Leste | Muro leste (trecho fundos), parte da Área Gourmet |
-| CAM-03 | Muro Oeste, altura da Suíte Master/Circulação | Oeste | Corredor lateral oeste (trecho norte) |
-| CAM-04 | Muro Leste / pátio, altura da Suíte 02 | Leste | Corredor lateral leste (trecho central) |
-| CAM-05 | Muro Leste, altura do Escritório/Depósito | Leste | Corredor lateral leste (trecho sul), acesso de serviço |
-| CAM-06 | Canto Sudoeste, próximo à Garagem | Sul/Oeste | Acesso de veículos, garagem, portão |
+| Câmera | Posição na planta | Cobertura |
+|---|---|---|
+| CAM-01 | Canto Noroeste, junto à piscina (onde o muro oeste encontra o muro norte) | Piscina, fundo do lote, muro oeste (trecho fundos) |
+| CAM-02 | Nicho formado pelo BWC de serviço, junto à Suíte Master (não é a quina externa — a câmera fica recuada em relação ao muro leste) | Fundo do corredor de serviço (Secagem/Lavanderia) e parte da Área Gourmet |
+| CAM-03 | Muro oeste, no recuo lateral entre o Gourmet e a Cozinha (o muro tem um recuo de 1,85 m nesse trecho — a câmera acompanha esse recuo, não a linha do muro principal) | Corredor lateral oeste, altura da Suíte Master/Circulação |
+| CAM-04 | Posição central, junto à Circulação/BWC entre as Suítes 01 e 02 (não é uma câmera de muro — fica voltada para o corredor interno) | Corredor central e acesso às Suítes 01/02 |
+| CAM-05 | Muro leste, no recuo/pátio ao lado da Suíte 02 (trecho sul) | Corredor lateral leste e o pátio/jardim de luz junto à Suíte 02 |
+| CAM-06 | Canto Sudoeste, entre o Escritório e a Garagem | Acesso de veículos, garagem, portão |
 
-> **Observação de cobertura:** com apenas 6 câmeras, o **acesso de pedestres/calçada no canto sudeste** (junto à Rua Fribourg) fica sem câmera dedicada — hoje é coberto apenas indiretamente pela CAM-06. Se o acesso de pedestres for prioritário para o cliente, vale avaliar deslocar a CAM-05 ou adicionar uma 7ª câmera nesse canto; mantido como está por ora, por refletir fielmente o que já foi definido.
+> **Correção em relação à revisão anterior:** o mapeamento anterior descrevia CAM-04/CAM-05 como câmeras de "muro leste, altura do Escritório" — isso estava errado, pois o Escritório fica no lado **oeste** da casa (confirmado ao extrair a planta baixa limpa do PDF). As posições acima refletem a checagem pixel a pixel contra as duas simulações fornecidas.
+>
+> **Observação de cobertura:** com esse layout, o **acesso de pedestres/calçada no canto sudeste** e o trecho do muro oeste entre a Suíte Master e o Escritório ficam sem câmera dedicada (cobertura apenas indireta pela CAM-06). Se esses pontos forem prioritários, vale considerar uma 7ª câmera; mantido como está por ora, por refletir fielmente o que já foi definido pelo cliente.
 
 ### 4.2 Especificação técnica das câmeras
 
@@ -166,11 +169,11 @@ O layout já esboçado nas simulações consolida-se em **6 câmeras externas fi
 
 A casa tem 30 m de profundidade e formato retangular estreito, com os pontos de rede distribuídos ao longo de todo esse eixo:
 
-- Extremo sul (~0–5 m): Garagem, acesso de veículos/pedestres, 1 câmera de canto (CAM-06), entrada da concessionária (ONU).
-- Trecho sul-central (~5–9 m): **Escritório**, Depósito, Lavanderia, Secagem — cluster de serviço, 1 câmera (CAM-05).
-- Trecho central (~9–18 m): Living, Cozinha/Jantar, Circulação, Suíte 01, Suíte 02 — **maior concentração de pontos**: AP-01, AP-02, 1 câmera (CAM-04), 3 pontos de TV (Living, Suíte 01, Suíte 02).
-- Trecho norte (~18–26 m): Suíte Master, Closet, BWC — AP-02 (extensão), 2 câmeras (CAM-02/03, muros leste e oeste), 1 ponto de TV.
-- Extremo norte (~26–30 m): Piscina, Deck, Gourmet — AP-03, 1 câmera de canto (CAM-01), 1 ponto de TV.
+- Extremo sul (~0–5 m): Garagem, acesso de veículos/pedestres, entrada da concessionária (ONU).
+- Trecho sul-central (~5–9 m): **Escritório**, Depósito, Lavanderia, Secagem — cluster de serviço, CAM-06 na fronteira deste trecho com a Garagem.
+- Trecho central (~9–18 m): Living, Cozinha/Jantar, Circulação, Suíte 01, Suíte 02 — **maior concentração de pontos**: AP-01, AP-02, CAM-04 e CAM-05 (posição central e muro leste/pátio), 3 pontos de TV (Living, Suíte 01, Suíte 02).
+- Trecho norte (~18–26 m): Suíte Master, Closet, BWC — AP-02 (extensão), CAM-02 e CAM-03 (nicho do BWC e recuo lateral oeste), 1 ponto de TV.
+- Extremo norte (~26–30 m): Piscina, Deck, Gourmet — AP-03, CAM-01 (canto noroeste), 1 ponto de TV.
 
 **Local definido — Escritório (~8 m do extremo sul):** por estar no mesmo cluster sul-central do Depósito, o Escritório herda o mesmo perfil de distância que aquela opção: é o ponto **mais curto para a Garagem/ONU** (uplink de concessionária mais barato, ~6–8 m) e para as câmeras CAM-05/06, porém é o **mais distante** dos pontos com maior concentração de demanda — bloco de suítes, corredor central e, principalmente, Piscina/Gourmet nos fundos (~26–30 m em linha de rota).
 
